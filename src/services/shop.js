@@ -1,4 +1,5 @@
-import { useAxios } from "./axios";
+import axios from "axios";
+import { useAxios, baseUrl } from "./axios";
 import { useAuthHeader } from "./useAuthHeader";
 
 export const FavoriteShop = async (shopId) => {
@@ -18,9 +19,8 @@ export const FavoriteShop = async (shopId) => {
 };
 
 export const GetShops = async () => {
-  const api = useAxios();
-  return await api
-    .get("shops")
+  return await axios
+    .get(`${baseUrl}/shops`)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -32,10 +32,8 @@ export const GetShops = async () => {
 };
 
 export const GetShopById = async (shopId) => {
-  const api = useAxios();
-
-  return await api
-    .get(`shops/${shopId}`)
+  return await axios
+    .get(`${baseUrl}/shops/${shopId}`)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -48,12 +46,11 @@ export const GetShopById = async (shopId) => {
 
 export const CreateShop = async (shop) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .post("shops", shop, authHeader)
+  return await axios
+    .post(`${baseUrl}/shops`, shop, authHeader)
     .then((response) => {
       console.log(response);
       return response.data;
@@ -66,12 +63,11 @@ export const CreateShop = async (shop) => {
 
 export const UpdateShopById = async (shopId, shop) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .patch(`shops/${shopId}`, shop, authHeader)
+  return await axios
+    .patch(`${baseUrl}/shops/${shopId}`, shop, authHeader)
     .then((response) => {
       return response.data;
     })
@@ -82,12 +78,11 @@ export const UpdateShopById = async (shopId, shop) => {
 
 export const UpdateShopFlavorsById = async (shopId, flavors) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .patch(`shops/${shopId}/flavors`, flavors, authHeader)
+  return await axios
+    .patch(`${baseUrl}/shops/${shopId}/flavors`, flavors, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -100,12 +95,11 @@ export const UpdateShopFlavorsById = async (shopId, flavors) => {
 
 export const DeleteShopById = async (shopId) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .delete(`shops/${shopId}`, authHeader)
+  return await axios
+    .delete(`${baseUrl}/shops/${shopId}`, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;

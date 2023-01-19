@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -10,18 +9,55 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { IoClose } from "react-icons/io5";
+import { CiCircleRemove } from "react-icons/ci";
 import { useNotification } from "../context/NotificationContext";
 import { useUser } from "../context/UserContext";
 import Loading from "./Loading";
-import NotificationShopInvitation from "./NotificationShopInvitation";
-import NotificationShopUpdate from "./NotificationShopUpdate";
+import NotificationShopInvitation from './NotificationShopInvitation'
+import NotificationShopUpdate from './NotificationShopUpdate'
 
 const ProfileNotification = () => {
+  const userContext = useUser();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const userContext = useUser();
+  const notificationContext = useNotification();
+
+  const handleRemoveNotification = async (e, notifi) => {
+    e.preventDefault();
+    setLoading(true);
+    // const removeNotificationData = await RemoveNotification(notifi.id);
+    // if (!removeNotificationData.status) {
+    //   setError(removeNotificationData.message);
+    //   setLoading(false);
+    //   return;
+    // }
+    // const arr = notificationContext.notification;
+    // arr.findIndex((obj) => obj.id === notifi.id);
+    // if (index <= 0) return;
+    // arr.splice(index, 1);
+    // notificationContext.setNotification(arr);
+    setLoading(false);
+  };
+
+  const handleRemoveAllNotification = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // const removeNotificationData = await RemoveAllNotification();
+    // if (!removeNotificationData.status) {
+    //   setError(removeNotificationData.message);
+    //   setLoading(false);
+    //   return;
+    // }
+    // const populateNotificationData = await GetAllNotification();
+    // if (!populateNotificationData.status) {
+    //   setError(populateNotificationData.message);
+    //   setLoading(false);
+    //   return;
+    // }
+    // notificationContext.setNotification(populateNotificationData.content);
+    setLoading(false);
+  };
 
   if (loading) return <Loading />;
   if (userContext.user.notifications.length <= 0)
@@ -37,7 +73,21 @@ const ProfileNotification = () => {
     );
   return (
     <Card className="card-profile">
-      <CardHeader className="card-header-profile" title="Powiadomienia" />
+      <CardHeader
+        className="card-header-profile"
+        title={
+          <div className="flex-row flex-space-between flex-center">
+            <Typography variant="h5">Powiadomienia</Typography>
+            <div>
+              {notificationContext.notification && (
+                <IconButton onClick={handleRemoveAllNotification}>
+                  <CiCircleRemove />
+                </IconButton>
+              )}
+            </div>
+          </div>
+        }
+      />
       <CardContent className="card-content-profile">
         <List>
           {userContext.user &&

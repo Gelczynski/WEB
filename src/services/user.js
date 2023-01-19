@@ -1,4 +1,5 @@
-import { useAxios } from "./axios";
+import axios from "axios";
+import { useAxios, baseUrl } from "./axios";
 import { useAuthHeader } from "./useAuthHeader";
 
 export const RemoveNotification = async (notifiId) => {
@@ -21,12 +22,11 @@ export const RemoveNotification = async (notifiId) => {
 
 export const GetAllUsers = async () => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .get("users/all", authHeader)
+  return await axios
+    .get(`${baseUrl}/users/all`, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -39,12 +39,11 @@ export const GetAllUsers = async () => {
 
 export const GetUser = async () => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .get("users", authHeader)
+  return await axios
+    .get(`${baseUrl}/users`, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -57,12 +56,11 @@ export const GetUser = async () => {
 
 export const GetUserById = async (userId) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .get(`users/${userId}`, authHeader)
+  return await axios
+    .get(`${baseUrl}/users/${userId}`, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -75,12 +73,11 @@ export const GetUserById = async (userId) => {
 
 export const UpdateUserById = async (userId, user) => {
   const authHeader = useAuthHeader();
-  const api = useAxios();
 
   if (!authHeader) return { message: "Błąd tokena autoryzacji" };
 
-  return await api
-    .patch(`users/${userId}`, user, authHeader)
+  return await axios
+    .patch(`${baseUrl}/users/${userId}`, user, authHeader)
     .then((response) => {
       console.log(response.data);
       return response.data;
