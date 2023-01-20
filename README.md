@@ -26,7 +26,7 @@ Everyone likes ice cream, so our group provides an application that will allow y
 
 - Clone the repo
   ```sh
-  git clone https://github.com/Ice-Cream-Places-ICP/WEB.git
+  git clone https://github.com/Gelczynski/WEB.git
   ```
 - Install NPM packages
   ```sh
